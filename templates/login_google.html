@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-signin-scope" content="profile email"/>
+    <meta name="google-signin-client_id"
+          content="94818655544-on6tu8bmfn5vj353uaq79rs9kceu1gmm.apps.googleusercontent.com"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+</body>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile()
+        var id_token = googleUser.getAuthResponse()
+        const response = fetch('http://localhost:8000/google/authentication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id_token)
+        })
+    }
+</script>
+</html>

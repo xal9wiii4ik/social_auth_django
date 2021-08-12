@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    window.fbAsyncInit = function () {
+        var response_1 = FB.init({
+            appId: "3657547817803756",
+            cookie: true,
+            xfbml: true,
+            version: "v5.0",
+        });
+        var response_2 = FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function checkLoginState() {
+        const response_3 = FB.getLoginStatus(function (response_data) {
+            statusChangeCallback(response_data);
+        });
+    }
+
+    function statusChangeCallback(response_data) {
+        if (response_data.status === 'connected') {
+            const response = fetch('http://localhost:8000/facebook/authentication', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(response_data)
+            })
+        }
+    }
+</script>
+
+<fb:login-button
+        scope="public_profile,email"
+        onlogin="checkLoginState();">
+</fb:login-button>
+<script src="https://connect.facebook.net/en_US/sdk.js" async defer></script>
+</body>
+</html>
